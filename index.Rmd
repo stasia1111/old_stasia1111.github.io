@@ -1,0 +1,64 @@
+---
+title       : Linear regression - excercise 
+subtitle    : Developing data products - projects
+author      : sta1111 #landslide 
+framework   : landslide       # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+
+
+---
+
+## Linear regression - exercise 
+# Developing data products - projects
+
+The main purpose of she presentation is to show steps of fitting linear model.
+The analysis is prepared on _mtcars_ dataset showed on the second slide and the depending variable is _mpg_. The following slides consists of:
+- plot with influence of combination of dependent variables on R2
+- formula od chosen model - with variables that implies the highest R2 + estimated coefficients
+- plots that help to asses goodless of fit to real data
+
+--- .class #id 
+
+## mtcars dataset table
+
+```{r, echo=FALSE, warning=FALSE, comment="" }
+library("leaps")
+dataset <- mtcars
+dataset[1:16,]
+```
+
+---
+
+## Variable Selection
+
+```{r}
+leaps<-regsubsets(mpg ~ ., data=dataset,nbest=10)
+plot(leaps,scale="r2")
+
+```
+
+---
+
+## Linear model estimation
+
+```{r, echo=FALSE, warning=FALSE, comment=""}
+fit <- lm(mpg ~ disp + hp + drat + wt + qsec + am + gear + carb, data=dataset)
+fit$call
+fit$coefficients
+
+```
+
+---
+
+## Goodness of fit
+
+```{r, echo=FALSE}
+layout(matrix(c(1,2,3,4),2,2)) 
+plot(fit)
+
+```
+
